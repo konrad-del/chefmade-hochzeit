@@ -14,7 +14,7 @@ python3 -m http.server 8767 --bind 127.0.0.1
 # open http://127.0.0.1:8767/
 ```
 
-- Main page: `index.html` (English, Option C full-bleed hero, reviews carousel directly under it, Variant C “What’s included” with three stacked rows)
+- Main page: `index.html` (English, Option C full-bleed hero, reviews carousel directly under it, included-v2 “What’s included” — full-colour Always included cards, optional extras on cream behind `addonrows`)
 - Hero + reviews shot: `/?shot=top` (pauses the marquee; caps the hero to the original 1440×900 fold height)
 - Pre-filled form, jump to step 2: `/?demo=1`
 - Form-only shot: `/?demo=1&shot=form&step=2`
@@ -35,7 +35,7 @@ window.FEATURES = {
   casestudy: true,    // “One wedding, start to finish” bento replaces #einblicke (staging placeholders)
   faq: false,         // whole FAQ (questions without answers looked odd)
   addons: false,      // form extras chips only (no prices, no selectable placeholders)
-  addonrows: true,    // “Guest favourites” and “Around the venue” rows in What’s included (staging)
+  addonrows: true,    // “Make it yours” divider + Guest favourites / Around the venue tiles (staging placeholders)
   email: false,       // [email] in the CTA and footer
   langtoggle: false,  // EN | DE | DA (DE and DA are still unwired placeholders)
   stagingPlaceholders: true  // allow bracketed placeholder copy on staging
@@ -46,7 +46,7 @@ window.FEATURES = {
 
 A live-hostname guard in the head script sets `stagingPlaceholders` to `false` and adds `html.hide-placeholders` whenever `location.hostname === 'hochzeit.chefmade.de'`. Elements marked `data-placeholder` (the review cards, the Guest favourites / Around the venue rows, and the case-study cards) are then hidden with CSS before first paint, even if the feature flags are left on by mistake. A placeholder-only `#einblicke` section is hidden in full, so a live visitor never sees an empty band or a leftover photo mosaic.
 
-`addonrows` is on for **staging only**. Rows 2 and 3 still use bracketed titles because Konrad has not confirmed that list. **Replace those brackets with signed-off copy, or set `addonrows` back to `false`, before a real public launch.** The form’s extras chips stay on `addons: false` and are not a selector.
+`addonrows` is on for **staging only**. It now reveals the “Make it yours” divider and the cream optional block (Guest favourites and Around the venue tiles), which still use bracketed titles and `[Short description]` lines because Konrad has not confirmed that list. **Replace those brackets with signed-off copy, or set `addonrows` back to `false`, before a real public launch.** On `hochzeit.chefmade.de` the live-hostname guard hides that whole optional block, so only the Always included cards remain. The form’s extras chips stay on `addons: false` and are not a selector.
 
 `casestudy` is on for **staging only**. `#einblicke` now shows only the case-study bento (kicker `[Wedding name / venue]`, heading “One wedding, start to finish”, photo mosaic plus chef, couple, menu and price cards). The old “Insights / A look at the result” heading and the standalone mosaic are gone; the `#einblicke` anchor is unchanged. **Replace the bracketed case-study copy with a real wedding, or set `casestudy` to `false`, before a public launch.** If the flag is off, or if the live-hostname guard hides the placeholders, the whole `#einblicke` section is removed (no leftover heading or empty cream band). Do not set `data-michelin="true"` unless that restaurant really holds a Michelin star. A second chef (`[Chef name 2]`) is hidden by default.
 
@@ -56,7 +56,7 @@ Each block is marked `data-feature="<flag>"` and ships with the `hidden` attribu
 
 To restore a block later: add the real copy, set the matching flag to `true` in the head script (and keep `js/app.js` reading `window.FEATURES`), then check the page.
 
-The six “Always included” cards keep their real titles (Consultation call, Chef selection, Personalised menu, Tasting, Finest ingredients, Backup plan). Rows 2 and 3 use the same card design, stagger reveal and horizontal scroll, with the same photos and gold icon tiles as the mockup, and no prices. All `[Short description]` body lines are omitted so the three rows match; add descriptions when you have them.
+The six “Always included” cards are always visible: full-colour photos (no grey wash), a gold “Included” check badge, and no “Learn more” links. Backup plan is a warm cream tile with a gold line icon, not an empty dark box. The optional extras sit in one cream block after a “Make it yours” / “Optional extras, added to your menu on request” divider, as compact icon tiles with a “+” (no photos, no prices). A scroll fade-in is used; any `?shot` parameter freezes it so screenshots render fully.
 
 The form stays a **three-step** enquiry (Date & venue → Style & menu wishes → Contact). Optional extras in the form are hidden with `addons`; the preview Extras row stays hidden while that flag is off. The `/dinings/create` handoff with `gclid` / UTM is unchanged.
 
@@ -80,7 +80,7 @@ Submit does **not** navigate anywhere. It builds a URL to `https://chefmade.de/d
 
 ## What’s on the page
 
-Kept: Option C hero (full-bleed `wedding-plan.webp`, no plating frame, gold-rule photo caption), the reviews carousel directly under the hero, the three benefit tiles (moved to sit just before How it works — not merged into the problem/promise section, because that already covers a transparent price, menus and allergies, and putting the tiles there would have meant dropping or rewriting copy), the problem / promise section (four questions on the left, no “The problem” heading; a visually hidden “Common worries about wedding catering” heading remains for accessibility), the three-row “What’s included” strip (Always included, plus Guest favourites and Around the venue via `addonrows`; cards and row spacing are compact), the case-study bento in `#einblicke` (“One wedding, start to finish”, via `casestudy`), how-it-works, the three-step form and handoff, the final CTA, phone / WhatsApp, and the footer.
+Kept: Option C hero (full-bleed `wedding-plan.webp`, no plating frame, gold-rule photo caption), the reviews carousel directly under the hero, the three benefit tiles (moved to sit just before How it works — not merged into the problem/promise section, because that already covers a transparent price, menus and allergies, and putting the tiles there would have meant dropping or rewriting copy), the problem / promise section (four questions on the left, no “The problem” heading; a visually hidden “Common worries about wedding catering” heading remains for accessibility), the included-v2 “What’s included” section (full-colour Always included cards, plus the cream optional block via `addonrows`), the case-study bento in `#einblicke` (“One wedding, start to finish”, via `casestudy`), how-it-works, the three-step form and handoff, the final CTA, phone / WhatsApp, and the footer.
 
 Hidden behind flags (see above): price band, FAQ, form extras (`addons`), contact email, language toggle. The case-study section is on for staging and hidden as a whole on the live hostname until real copy replaces the placeholders.
 
@@ -96,8 +96,8 @@ Renders from this folder:
 - `shots/full-desktop.png` — full page, 1440 wide (`?shot=full`)
 - `shots/problem-desktop.png` — problem / promise section, 1440 wide, with ~100px of the reviews carousel above (`?shot=problem`)
 - `shots/problem-mobile.png` — problem / promise section, 390 wide (`?shot=problem`)
-- `shots/included-compact-desktop.png` — “What’s included” only, 1440 wide (`?shot=inkl`)
-- `shots/included-compact-mobile.png` — “What’s included” only, 390 wide (`?shot=inkl`)
+- `shots/included-v2-main-desktop.png` — “What’s included” on the main page, 1440 wide (`?shot=inkl`)
+- `shots/included-v2-main-mobile.png` — “What’s included” on the main page, 390 wide (`?shot=inkl`)
 
 ## Package
 

@@ -816,12 +816,14 @@
 
   function initEditorialRows() {
     var rows = qsa(".ed-row");
-    if (!rows.length) return;
+    var reveals = qsa(".iv2-reveal");
+    if (!rows.length && !reveals.length) return;
     var html = document.documentElement;
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var force = html.classList.contains("shot-inkl") || html.classList.contains("shot-full") || html.classList.contains("shot-anim") || reduce;
+    var force = html.classList.contains("shot") || html.classList.contains("shot-inkl") || html.classList.contains("shot-full") || html.classList.contains("shot-anim") || reduce;
     if (force || !("IntersectionObserver" in window)) {
       rows.forEach(function (row) { row.classList.add("is-inview"); });
+      reveals.forEach(function (el) { el.classList.add("is-inview"); });
       return;
     }
     var io = new IntersectionObserver(function (entries) {
@@ -831,8 +833,9 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.22, rootMargin: "0px 0px -10% 0px" });
-    rows.forEach(function (row) { io.observe(row); });
+    }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+    if (reveals.length) reveals.forEach(function (el) { io.observe(el); });
+    else rows.forEach(function (row) { io.observe(row); });
   }
 
 
