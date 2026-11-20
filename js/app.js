@@ -46,7 +46,7 @@
   var FEATURES = window.FEATURES || {
     reviews: true,
     pricing: false,
-    casestudy: false,
+    casestudy: true,
     faq: false,
     addons: false,
     addonrows: true,

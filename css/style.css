@@ -2136,12 +2136,9 @@ html.shot-full .hero-c {
 
 /* After placeholder sections are hidden, keep backgrounds alternating:
    black features → white problem/promise → dark “What’s included”
-   → cream photo insights → white how-it-works → cream form → black CTA. */
+   → cream case study → black feature tiles → white how-it-works → cream form → black CTA. */
 #einblicke { background: var(--cream); }
 .section.process { background: var(--white); }
-
-/* Photo grid sits under the Insights heading when the case study is off. */
-#einblicke .case-bento .photo-grid { margin-top: 0; }
 
 /* CTA contact: two columns while the email line is hidden. */
 @media (min-width: 700px) {
@@ -2154,8 +2151,6 @@ html.shot-full .hero-c {
 
 
 /* ===== Case study bento (#einblicke) ===== */
-html.feat-casestudy [data-insights-heading="plain"] { display: none !important; }
-
 .case-study-head { max-width: 22em; }
 .case-study-head .kicker.ph { color: var(--gold-text); }
 

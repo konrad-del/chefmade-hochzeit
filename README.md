@@ -32,7 +32,7 @@ The source of truth is `window.FEATURES` in the inline `<head>` script (mirrored
 window.FEATURES = {
   reviews: true,      // review marquee directly under the hero
   pricing: false,     // price and guest-range band
-  casestudy: false,   // “One wedding, start to finish” bento (chef, couple, menu, price). Off: Insights photo mosaic only.
+  casestudy: true,    // “One wedding, start to finish” bento replaces #einblicke (staging placeholders)
   faq: false,         // whole FAQ (questions without answers looked odd)
   addons: false,      // form extras chips only (no prices, no selectable placeholders)
   addonrows: true,    // “Guest favourites” and “Around the venue” rows in What’s included (staging)
@@ -42,13 +42,15 @@ window.FEATURES = {
 }
 ```
 
-`reviews` is on for **staging only**, with six clearly bracketed placeholder cards (`[Quote]`, `[Name]`, `[City · Month Year]`). `stagingPlaceholders` is also on. **Before a public launch, put real reviews in or set `reviews` to `false`.** The same applies to any other block that still uses bracketed copy (`addonrows`, and `casestudy` when that flag is turned on).
+`reviews` is on for **staging only**, with six clearly bracketed placeholder cards (`[Quote]`, `[Name]`, `[City · Month Year]`). `stagingPlaceholders` is also on. **Before a public launch, put real reviews in or set `reviews` to `false`.** The same applies to any other block that still uses bracketed copy (`addonrows`, and the case-study bento).
 
-A live-hostname guard in the head script sets `stagingPlaceholders` to `false` and adds `html.hide-placeholders` whenever `location.hostname === 'hochzeit.chefmade.de'`. Elements marked `data-placeholder` (the review cards, the Guest favourites / Around the venue rows, and the case-study story cards) are then hidden with CSS before first paint, even if the feature flags are left on by mistake.
+A live-hostname guard in the head script sets `stagingPlaceholders` to `false` and adds `html.hide-placeholders` whenever `location.hostname === 'hochzeit.chefmade.de'`. Elements marked `data-placeholder` (the review cards, the Guest favourites / Around the venue rows, and the case-study cards) are then hidden with CSS before first paint, even if the feature flags are left on by mistake. A placeholder-only `#einblicke` section is hidden in full, so a live visitor never sees an empty band or a leftover photo mosaic.
 
 `addonrows` is on for **staging only**. Rows 2 and 3 still use bracketed titles because Konrad has not confirmed that list. **Replace those brackets with signed-off copy, or set `addonrows` back to `false`, before a real public launch.** The form’s extras chips stay on `addons: false` and are not a selector.
 
-`casestudy` stays **false**. With the flag off, `#einblicke` keeps only the “Insights / A look at the result” heading and the existing photo mosaic — that looked cleaner than hiding the whole section. Turn the flag on once a real wedding is filled in (the bento still uses bracketed placeholders). Do not set `data-michelin="true"` unless that restaurant really holds a Michelin star. A second chef (`[Chef name 2]`) is hidden by default.
+`casestudy` is on for **staging only**. `#einblicke` now shows only the case-study bento (kicker `[Wedding name / venue]`, heading “One wedding, start to finish”, photo mosaic plus chef, couple, menu and price cards). The old “Insights / A look at the result” heading and the standalone mosaic are gone; the `#einblicke` anchor is unchanged. **Replace the bracketed case-study copy with a real wedding, or set `casestudy` to `false`, before a public launch.** If the flag is off, or if the live-hostname guard hides the placeholders, the whole `#einblicke` section is removed (no leftover heading or empty cream band). Do not set `data-michelin="true"` unless that restaurant really holds a Michelin star. A second chef (`[Chef name 2]`) is hidden by default.
+
+To simulate the live guard on staging, open `/?hostname=hochzeit.chefmade.de`. That hook can only turn the guard on; it cannot turn it off on the real hostname.
 
 Each block is marked `data-feature="<flag>"` and ships with the `hidden` attribute. A short blocking script at the end of `<body>` un-hides a block only when its flag is `true`. CSS `[data-feature][hidden] { display: none !important; }` is in the `<head>` so flagged blocks never flash, even if a utility `display` rule would otherwise win.
 
@@ -78,9 +80,9 @@ Submit does **not** navigate anywhere. It builds a URL to `https://chefmade.de/d
 
 ## What’s on the page
 
-Kept: Option C hero (full-bleed `wedding-plan.webp`, no plating frame, gold-rule photo caption), the reviews carousel directly under the hero, the three benefit tiles (moved to sit just before How it works — not merged into the problem/promise section, because that already covers a transparent price, menus and allergies, and putting the tiles there would have meant dropping or rewriting copy), the problem / promise section, the three-row “What’s included” strip (Always included, plus Guest favourites and Around the venue via `addonrows`), the Insights photo mosaic (the case-study bento stays behind `casestudy`), how-it-works, the three-step form and handoff, the final CTA, phone / WhatsApp, and the footer.
+Kept: Option C hero (full-bleed `wedding-plan.webp`, no plating frame, gold-rule photo caption), the reviews carousel directly under the hero, the three benefit tiles (moved to sit just before How it works — not merged into the problem/promise section, because that already covers a transparent price, menus and allergies, and putting the tiles there would have meant dropping or rewriting copy), the problem / promise section, the three-row “What’s included” strip (Always included, plus Guest favourites and Around the venue via `addonrows`), the case-study bento in `#einblicke` (“One wedding, start to finish”, via `casestudy`), how-it-works, the three-step form and handoff, the final CTA, phone / WhatsApp, and the footer.
 
-Hidden behind flags (see above): price band, the case-study story cards and “One wedding, start to finish” heading (`casestudy`), FAQ, form extras (`addons`), contact email, language toggle.
+Hidden behind flags (see above): price band, FAQ, form extras (`addons`), contact email, language toggle. The case-study section is on for staging and hidden as a whole on the live hostname until real copy replaces the placeholders.
 
 ## Shots
 
@@ -89,6 +91,9 @@ Renders from this folder:
 - `shots/top-desktop.png` — hero plus the full reviews carousel, 1440×~1300 (`?shot=top`)
 - `shots/top-mobile.png` — hero plus the carousel, 390 wide (`?shot=top`)
 - `shots/hero-compare.png` — original Option C hero (`hero-c.html`) on the left, the new English hero on the right
+- `shots/casestudy-desktop.png` — case study only, 1440 wide (`?shot=case`)
+- `shots/casestudy-mobile.png` — case study only, 390 wide (`?shot=case`)
+- `shots/full-desktop.png` — full page, 1440 wide (`?shot=full`)
 
 ## Package
 

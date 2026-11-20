@@ -54,7 +54,7 @@
     window.FEATURES = {
       reviews: true,
       pricing: false,
-      casestudy: false,
+      casestudy: true,
       faq: false,
       addons: false,
       addonrows: true,
@@ -64,14 +64,16 @@
     };
     (function () {
       try {
-        var live = location.hostname === "hochzeit.chefmade.de";
+        var q = new URLSearchParams(location.search);
+        /* ?hostname=hochzeit.chefmade.de is a staging/test hook only.
+           It can force the live guard on; it cannot turn the guard off
+           on the real hostname. */
+        var live = location.hostname === "hochzeit.chefmade.de"
+          || q.get("hostname") === "hochzeit.chefmade.de";
         if (live) window.FEATURES.stagingPlaceholders = false;
         if (live || !window.FEATURES.stagingPlaceholders) {
           document.documentElement.classList.add("hide-placeholders");
         }
-      } catch (e) {}
-      try {
-        var q = new URLSearchParams(location.search);
         var shot = q.get("shot");
         if (shot === "form") document.documentElement.classList.add("shot-form");
         if (shot === "inkl") document.documentElement.classList.add("shot-inkl");
@@ -95,8 +97,11 @@
     html.hide-placeholders .reviews-strip:not(:has(.review-card:not([data-placeholder]))) {
       display: none !important;
     }
-    html.hide-placeholders.feat-casestudy [data-insights-heading="plain"] { display: block !important; }
-    html.hide-placeholders .case-study-head { display: none !important; }
+    /* Placeholder-only case study: hide the whole #einblicke section so
+       live visitors never see an empty cream band or a leftover mosaic. */
+    html.hide-placeholders #einblicke:not(:has(.story-card:not([data-placeholder]))) {
+      display: none !important;
+    }
   </style>
 
 </head>
@@ -496,13 +501,8 @@
     <p class="note">A transparent price — no nasty surprises.</p>
   </section>
 
-  <section class="section" id="einblicke">
+  <section class="section" id="einblicke" data-feature="casestudy" hidden>
     <div class="section-inner">
-      <div class="sec-head" data-insights-heading="plain">
-        <div class="kicker">Insights</div>
-        <h2>A look at the result</h2>
-      </div>
-
       <div class="sec-head case-study-head" data-feature="casestudy" data-placeholder hidden>
         <div class="kicker ph">[Wedding name / venue]</div>
         <h2>One wedding, start to finish</h2>
@@ -976,6 +976,10 @@
         document.documentElement.classList.toggle("feat-" + k, !!F[k]);
       });
       if (hidePh) document.documentElement.classList.remove("feat-casestudy");
+      var ein = document.getElementById("einblicke");
+      if (ein && (hidePh || !F.casestudy) && !ein.querySelector(".story-card:not([data-placeholder])")) {
+        ein.hidden = true;
+      }
     })();
   </script>
   <script src="js/app.js"></script>
