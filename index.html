@@ -48,13 +48,16 @@
   <script>
     // Source of truth for optional blocks. js/app.js reads the same object.
     // Set a flag to true to reveal the matching [data-feature] block(s)
-    // once real copy is ready. Defaults are off so placeholders never show.
+    // once real copy is ready. Most defaults are off so placeholders never show.
+    // FEATURES.addonrows is on for staging only; replace the bracketed titles
+    // or set the flag back to false before a public launch.
     window.FEATURES = {
       reviews: false,
       pricing: false,
       casestudy: false,
       faq: false,
       addons: false,
+      addonrows: true,
       email: false,
       langtoggle: false
     };
@@ -350,7 +353,7 @@
       </div>
     </article>
 
-    <article class="ed-row" data-row="2" data-feature="addons" hidden>
+    <article class="ed-row" data-row="2" data-feature="addonrows" hidden>
       <header class="ed-head" style="--ed-delay: 0ms">
         <p class="ed-label">Optional</p>
         <h2>
@@ -366,7 +369,6 @@
           </div>
           <div class="ed-card-copy">
             <h3 class="ph">[Wine pairing]</h3>
-            <p class="ph">[Short description]</p>
             <a class="ed-more" href="#anfrage"><span class="ed-rule" aria-hidden="true"></span>Learn more</a>
           </div>
         </article>
@@ -381,7 +383,6 @@
           </div>
           <div class="ed-card-copy">
             <h3 class="ph">[Oyster station]</h3>
-            <p class="ph">[Short description]</p>
             <a class="ed-more" href="#anfrage"><span class="ed-rule" aria-hidden="true"></span>Learn more</a>
           </div>
         </article>
@@ -391,7 +392,6 @@
           </div>
           <div class="ed-card-copy">
             <h3 class="ph">[Live station]</h3>
-            <p class="ph">[Short description]</p>
             <a class="ed-more" href="#anfrage"><span class="ed-rule" aria-hidden="true"></span>Learn more</a>
           </div>
         </article>
@@ -401,14 +401,13 @@
           </div>
           <div class="ed-card-copy">
             <h3 class="ph">[Dessert table]</h3>
-            <p class="ph">[Short description]</p>
             <a class="ed-more" href="#anfrage"><span class="ed-rule" aria-hidden="true"></span>Learn more</a>
           </div>
         </article>
       </div>
     </article>
 
-    <article class="ed-row" data-row="3" data-feature="addons" hidden>
+    <article class="ed-row" data-row="3" data-feature="addonrows" hidden>
       <header class="ed-head" style="--ed-delay: 0ms">
         <p class="ed-label">Optional</p>
         <h2>
@@ -424,7 +423,6 @@
           </div>
           <div class="ed-card-copy">
             <h3 class="ph">[Service staff]</h3>
-            <p class="ph">[Short description]</p>
             <a class="ed-more" href="#anfrage"><span class="ed-rule" aria-hidden="true"></span>Learn more</a>
           </div>
         </article>
@@ -434,7 +432,6 @@
           </div>
           <div class="ed-card-copy">
             <h3 class="ph">[Tableware &amp; décor]</h3>
-            <p class="ph">[Short description]</p>
             <a class="ed-more" href="#anfrage"><span class="ed-rule" aria-hidden="true"></span>Learn more</a>
           </div>
         </article>
@@ -444,7 +441,6 @@
           </div>
           <div class="ed-card-copy">
             <h3 class="ph">[Premium venues]</h3>
-            <p class="ph">[Short description]</p>
             <a class="ed-more" href="#anfrage"><span class="ed-rule" aria-hidden="true"></span>Learn more</a>
           </div>
         </article>
@@ -454,7 +450,6 @@
           </div>
           <div class="ed-card-copy">
             <h3 class="ph">[Event styling]</h3>
-            <p class="ph">[Short description]</p>
             <a class="ed-more" href="#anfrage"><span class="ed-rule" aria-hidden="true"></span>Learn more</a>
           </div>
         </article>
@@ -464,7 +459,6 @@
           </div>
           <div class="ed-card-copy">
             <h3 class="ph">[Event photography]</h3>
-            <p class="ph">[Short description]</p>
             <a class="ed-more" href="#anfrage"><span class="ed-rule" aria-hidden="true"></span>Learn more</a>
           </div>
         </article>
