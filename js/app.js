@@ -102,7 +102,30 @@
       includedTableware: "[Tableware & décor]",
       includedVenues: "[Premium venues]",
       includedStyling: "[Event styling]",
-      includedPhoto: "[Event photography]"
+      includedPhoto: "[Event photography]",
+      caseHeading: "One wedding, start to finish",
+      caseKicker: "[Wedding name / venue]",
+      caseMenu: "Menu",
+      casePrice: "Price",
+      casePerPerson: "per person",
+      caseGuests: "guests",
+      caseChefPhoto: "[Chef photo]",
+      caseChefName: "[Chef name]",
+      caseChefName2: "[Chef name 2]",
+      caseRestaurant: "[Restaurant background]",
+      caseCoupleNames: "[Couple names]",
+      caseWeddingMeta: "[Wedding location · Month Year]",
+      caseQuote: "[Quote]",
+      caseRating: "[Rating]",
+      caseCourse1: "[Course 1]",
+      caseCourse2: "[Course 2]",
+      caseCourse3: "[Course 3]",
+      caseCourse4: "[Course 4]",
+      caseCourse5: "[Course 5]",
+      caseCourseDesc: "[Short description]",
+      casePricePer: "[€ / person]",
+      casePriceLine: "[Guests] guests · [€ total]",
+      casePriceNote: "[What’s included in the price]"
     },
     de: {
       locale: "de-DE",
@@ -146,7 +169,30 @@
       includedTableware: "[Geschirr & Tischdeko]",
       includedVenues: "[Premium-Locations]",
       includedStyling: "[Event-Styling]",
-      includedPhoto: "[Eventfotografie]"
+      includedPhoto: "[Eventfotografie]",
+      caseHeading: "Eine Hochzeit von A bis Z",
+      caseKicker: "[Hochzeitsname / Location]",
+      caseMenu: "Menü",
+      casePrice: "Preis",
+      casePerPerson: "pro Person",
+      caseGuests: "Gäste",
+      caseChefPhoto: "[Chef-Foto]",
+      caseChefName: "[Kochname]",
+      caseChefName2: "[Kochname 2]",
+      caseRestaurant: "[Restaurant-Hintergrund]",
+      caseCoupleNames: "[Namen des Paares]",
+      caseWeddingMeta: "[Hochzeitsort · Monat Jahr]",
+      caseQuote: "[Zitat]",
+      caseRating: "[Bewertung]",
+      caseCourse1: "[Gang 1]",
+      caseCourse2: "[Gang 2]",
+      caseCourse3: "[Gang 3]",
+      caseCourse4: "[Gang 4]",
+      caseCourse5: "[Gang 5]",
+      caseCourseDesc: "[Kurzbeschreibung]",
+      casePricePer: "[€ / Person]",
+      casePriceLine: "[Gäste] Gäste · [€ gesamt]",
+      casePriceNote: "[Was im Preis enthalten ist]"
     },
     da: {
       locale: "da-DK",
@@ -190,7 +236,30 @@
       includedTableware: "[DA]",
       includedVenues: "[DA]",
       includedStyling: "[DA]",
-      includedPhoto: "[DA]"
+      includedPhoto: "[DA]",
+      caseHeading: "[DA]",
+      caseKicker: "[DA]",
+      caseMenu: "[DA]",
+      casePrice: "[DA]",
+      casePerPerson: "[DA]",
+      caseGuests: "[DA]",
+      caseChefPhoto: "[DA]",
+      caseChefName: "[DA]",
+      caseChefName2: "[DA]",
+      caseRestaurant: "[DA]",
+      caseCoupleNames: "[DA]",
+      caseWeddingMeta: "[DA]",
+      caseQuote: "[DA]",
+      caseRating: "[DA]",
+      caseCourse1: "[DA]",
+      caseCourse2: "[DA]",
+      caseCourse3: "[DA]",
+      caseCourse4: "[DA]",
+      caseCourse5: "[DA]",
+      caseCourseDesc: "[DA]",
+      casePricePer: "[DA]",
+      casePriceLine: "[DA]",
+      casePriceNote: "[DA]"
     }
   };
   var copy = I18N.en;
@@ -764,6 +833,29 @@
     rows.forEach(function (row) { io.observe(row); });
   }
 
+
+  function initCaseStudy() {
+    var bento = qs(".case-bento");
+    if (!bento) return;
+    var html = document.documentElement;
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var force = html.classList.contains("shot-case") || html.classList.contains("shot-full") || reduce;
+    if (!FEATURES.casestudy && !html.classList.contains("shot-case")) return;
+    if (force || !("IntersectionObserver" in window)) {
+      bento.classList.add("is-inview");
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-inview");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2, rootMargin: "0px 0px -8% 0px" });
+    io.observe(bento);
+  }
+
   function initInklusive() {
     qsa(".orbit-item, .inkl-expand").forEach(function (btn) {
       var group = btn.closest("[data-inkl-group]") || btn.parentElement;
@@ -920,6 +1012,7 @@
     initReviewsStrip();
     initInklusive();
     initEditorialRows();
+    initCaseStudy();
     applyDemo();
     document.documentElement.setAttribute("data-app-ready", "1");
   }

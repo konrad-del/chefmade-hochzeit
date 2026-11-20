@@ -42,7 +42,7 @@
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/inklusive-c.css">
   <script>
@@ -69,6 +69,10 @@
         if (shot === "inkl") document.documentElement.classList.add("shot-inkl");
         if (shot === "reviews") document.documentElement.classList.add("shot-reviews");
         if (shot === "full") document.documentElement.classList.add("shot-full");
+        if (shot === "case") {
+          document.documentElement.classList.add("shot-case", "feat-casestudy");
+          window.FEATURES.casestudy = true;
+        }
       } catch (e) {}
     })();
   </script>
@@ -474,49 +478,118 @@
 
   <section class="section" id="einblicke">
     <div class="section-inner">
-      <div class="sec-head">
+      <div class="sec-head" data-insights-heading="plain">
         <div class="kicker">Insights</div>
         <h2>A look at the result</h2>
       </div>
 
-      <article class="case" data-feature="casestudy" hidden>
-        <div class="case-img">
-          <img src="assets/img/beyond-plate.webp" alt="A long wedding table set under flowers">
-        </div>
-        <div class="case-body">
-          <div class="case-lab">Insight · A past wedding</div>
-          <h3>A wedding in <span class="ph">[City]</span></h3>
-          <div class="case-meta"><span class="ph">[City]</span> · <span class="ph">[Month Year]</span> · with chef <span class="ph">[Name]</span></div>
-          <div class="spec">
-            <div>Format<b class="ph">[Format]</b></div>
-            <div>Guests<b class="ph">[Number]</b></div>
-            <div>Courses<b class="ph">[X]</b></div>
-            <div>City<b class="ph">[City]</b></div>
-          </div>
-          <div class="case-q">
-            <p>&ldquo;<span class="ph">[Short quote from the hosts.]</span>&rdquo;</p>
-            <small class="ph">[Name]</small>
-          </div>
-          <div class="case-bot">Planning something similar?</div>
-        </div>
-      </article>
-
-      <div class="photo-grid">
-        <div class="tile tile-lg"><img src="assets/img/dream-menu-figure03.webp" alt="A couple with a champagne tower"></div>
-        <div class="tile"><img src="assets/img/dream-menu-figure01.webp" alt="A wedding cake"></div>
-        <div class="tile"><img src="assets/img/beyond-figure03.webp" alt="A plated course"></div>
-        <div class="tile"><img src="assets/img/trends-figure05.webp" alt="A live pasta station at a wedding"></div>
-        <div class="tile"><img src="assets/img/wedding-plan.webp" alt="A decorated wedding venue"></div>
+      <div class="sec-head case-study-head" data-feature="casestudy" hidden>
+        <div class="kicker ph">[Wedding name / venue]</div>
+        <h2>One wedding, start to finish</h2>
       </div>
 
-      <aside class="review" data-feature="casestudy" hidden>
-        <div class="mark" aria-hidden="true">„</div>
-        <div>
-          <div class="stars" aria-hidden="true"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-          <q><span class="ph">[Quote]</span></q>
-          <div class="who"><span class="ph">[Name]</span></div>
+      <div class="case-bento">
+        <div class="photo-grid" style="--ed-delay: 0ms">
+          <div class="tile tile-lg"><img src="assets/img/dream-menu-figure03.webp" alt="A couple with a champagne tower"></div>
+          <div class="tile"><img src="assets/img/dream-menu-figure01.webp" alt="A wedding cake"></div>
+          <div class="tile"><img src="assets/img/beyond-figure03.webp" alt="A plated course"></div>
+          <div class="tile"><img src="assets/img/trends-figure05.webp" alt="A live pasta station at a wedding"></div>
+          <div class="tile"><img src="assets/img/wedding-plan.webp" alt="A decorated wedding venue"></div>
         </div>
-      </aside>
+
+        <article class="story-card story-card-chef" data-feature="casestudy" hidden style="--ed-delay: 120ms">
+          <div class="chef-people">
+            <div class="chef-person">
+              <div class="chef-photo-slot" aria-label="Chef photo placeholder">
+                <svg class="chef-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="24" cy="16" r="6.25"/>
+                  <path d="M12.5 36.5c1.7-7.2 6.4-10.75 11.5-10.75S33.8 29.3 35.5 36.5"/>
+                </svg>
+                <span class="ph">[Chef photo]</span>
+              </div>
+              <div class="chef-copy">
+                <h3 class="ph">[Chef name]</h3>
+                <p class="chef-resto">
+                  <span class="ph">[Restaurant background]</span>
+                  <!-- Only set data-michelin="true" (and remove hidden) if the restaurant really holds a Michelin star. Do not invent this. -->
+                  <span class="michelin-badge" data-michelin="false" hidden title="Michelin star" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.2l1.76 3.56 3.93.57-2.85 2.78.67 3.92L8 10.18 4.49 12.03l.67-3.92L2.31 5.33l3.93-.57L8 1.2z" fill="currentColor"/></svg>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="chef-person chef-person-2" hidden>
+              <div class="chef-photo-slot" aria-label="Chef photo placeholder">
+                <svg class="chef-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="24" cy="16" r="6.25"/>
+                  <path d="M12.5 36.5c1.7-7.2 6.4-10.75 11.5-10.75S33.8 29.3 35.5 36.5"/>
+                </svg>
+                <span class="ph">[Chef photo]</span>
+              </div>
+              <div class="chef-copy">
+                <h3 class="ph">[Chef name 2]</h3>
+                <p class="chef-resto">
+                  <span class="ph">[Restaurant background]</span>
+                  <!-- Only set data-michelin="true" (and remove hidden) if the restaurant really holds a Michelin star. Do not invent this. -->
+                  <span class="michelin-badge" data-michelin="false" hidden title="Michelin star" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.2l1.76 3.56 3.93.57-2.85 2.78.67 3.92L8 10.18 4.49 12.03l.67-3.92L2.31 5.33l3.93-.57L8 1.2z" fill="currentColor"/></svg>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="story-card story-card-couple" data-feature="casestudy" hidden style="--ed-delay: 240ms">
+          <h3 class="ph">[Couple names]</h3>
+          <p class="couple-meta ph">[Wedding location · Month Year]</p>
+          <blockquote class="couple-quote">
+            <p class="ph">[Quote]</p>
+          </blockquote>
+          <div class="couple-rating">
+            <span class="tp-stars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+            <span class="ph">[Rating]</span>
+          </div>
+        </article>
+
+        <article class="story-card story-card-menu" data-feature="casestudy" hidden style="--ed-delay: 360ms">
+          <h3 class="menu-kicker">Menu</h3>
+          <ol class="menu-list">
+            <li>
+              <span class="menu-num">01</span>
+              <h4 class="ph">[Course 1]</h4>
+              <p class="ph">[Short description]</p>
+            </li>
+            <li>
+              <span class="menu-num">02</span>
+              <h4 class="ph">[Course 2]</h4>
+              <p class="ph">[Short description]</p>
+            </li>
+            <li>
+              <span class="menu-num">03</span>
+              <h4 class="ph">[Course 3]</h4>
+              <p class="ph">[Short description]</p>
+            </li>
+            <li>
+              <span class="menu-num">04</span>
+              <h4 class="ph">[Course 4]</h4>
+              <p class="ph">[Short description]</p>
+            </li>
+            <li>
+              <span class="menu-num">05</span>
+              <h4 class="ph">[Course 5]</h4>
+              <p class="ph">[Short description]</p>
+            </li>
+          </ol>
+        </article>
+
+        <article class="story-card story-card-price" data-feature="casestudy" hidden style="--ed-delay: 480ms">
+          <h3 class="price-kicker">Price</h3>
+          <p class="price-hero ph">[€ / person]</p>
+          <p class="price-line ph">[Guests] guests · [€ total]</p>
+          <p class="price-note ph">[What’s included in the price]</p>
+        </article>
+      </div>
     </div>
   </section>
 

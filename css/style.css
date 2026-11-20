@@ -2186,7 +2186,7 @@ html.shot-full .hero-c {
 .section.process { background: var(--white); }
 
 /* Photo grid sits under the Insights heading when the case study is off. */
-#einblicke .case[hidden] + .photo-grid { margin-top: 0; }
+#einblicke .case-bento .photo-grid { margin-top: 0; }
 
 /* CTA contact: two columns while the email line is hidden. */
 @media (min-width: 700px) {
@@ -2195,4 +2195,269 @@ html.shot-full .hero-c {
     grid-template-columns: repeat(3, 1fr);
     max-width: 760px;
   }
+}
+
+
+/* ===== Case study bento (#einblicke) ===== */
+html.feat-casestudy [data-insights-heading="plain"] { display: none !important; }
+
+.case-study-head { max-width: 22em; }
+.case-study-head .kicker.ph { color: var(--gold-text); }
+
+.story-card[hidden],
+.chef-person-2[hidden],
+.michelin-badge[hidden],
+.michelin-badge[data-michelin]:not([data-michelin="true"]) {
+  display: none !important;
+}
+.michelin-badge[data-michelin="true"] {
+  display: inline-flex !important;
+  align-items: center;
+  color: var(--gold);
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+html.feat-casestudy .case-bento {
+  display: grid;
+  gap: 12px;
+  align-items: stretch;
+}
+
+@media (min-width: 800px) {
+  html.feat-casestudy .case-bento {
+    grid-template-columns: 1.3fr 1fr;
+    grid-template-areas:
+      "mosaic chef"
+      "mosaic couple"
+      "menu   price";
+  }
+  html.feat-casestudy .case-bento .photo-grid {
+    grid-area: mosaic;
+    margin: 0;
+    height: 100%;
+    min-height: 0;
+    grid-template-rows: 1fr 1fr;
+  }
+  html.feat-casestudy .story-card-chef { grid-area: chef; }
+  html.feat-casestudy .story-card-couple { grid-area: couple; }
+  html.feat-casestudy .story-card-menu { grid-area: menu; }
+  html.feat-casestudy .story-card-price { grid-area: price; }
+}
+
+.story-card {
+  border-radius: 16px;
+  padding: 28px 26px 24px;
+  overflow: hidden;
+}
+.story-card-chef { padding: 26px 24px; min-height: 132px; }
+
+.story-card-chef,
+.story-card-price {
+  background: #111;
+  color: #f7f3ee;
+  border: 1px solid rgba(201, 165, 74, 0.28);
+}
+.story-card-couple,
+.story-card-menu {
+  background: #fff;
+  color: #111;
+  border: 1px solid rgba(201, 165, 74, 0.35);
+}
+
+.chef-people { display: grid; gap: 22px; }
+.chef-person { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; }
+.chef-photo-slot {
+  width: 92px;
+  height: 92px;
+  border-radius: 12px;
+  background: #1a1a1a;
+  border: 1px solid rgba(201, 165, 74, 0.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--gold);
+  flex: 0 0 auto;
+}
+.chef-icon { width: 36px; height: 36px; }
+.chef-photo-slot .ph {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c9a54a;
+  font-weight: 500;
+}
+.chef-copy h3 {
+  font-size: 22px;
+  letter-spacing: -0.03em;
+  margin: 0 0 6px;
+}
+.chef-resto {
+  margin: 0;
+  font-size: 13px;
+  color: #c8c2b8;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.story-card-chef .ph { color: #e8e0d2; }
+
+.story-card-couple h3 {
+  font-size: 22px;
+  letter-spacing: -0.03em;
+  margin: 0 0 6px;
+}
+.couple-meta {
+  margin: 0 0 18px;
+  font-size: 13px;
+  color: #666;
+}
+.couple-quote {
+  margin: 0 0 20px;
+}
+.couple-quote p {
+  margin: 0;
+  font-family: "Cormorant Garamond", "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(26px, 2.4vw, 34px);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #111;
+}
+.couple-quote p::before { content: "“"; }
+.couple-quote p::after { content: "”"; }
+.couple-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #555;
+}
+
+.story-card-menu { text-align: center; padding: 32px 28px 28px; }
+.menu-kicker,
+.price-kicker {
+  margin: 0 0 18px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.menu-kicker { color: #8a7340; }
+.price-kicker { color: var(--gold-text); }
+.menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.menu-list li {
+  padding: 14px 8px;
+  border-top: 1px solid rgba(201, 165, 74, 0.45);
+}
+.menu-list li:last-child { border-bottom: 1px solid rgba(201, 165, 74, 0.45); }
+.menu-num {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c9a54a;
+  margin-bottom: 4px;
+}
+.menu-list h4 {
+  margin: 0;
+  font-family: "Cormorant Garamond", "Times New Roman", serif;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: 0.01em;
+}
+.menu-list p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #666;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  font-variant: normal;
+  font-family: var(--font);
+}
+
+.story-card-price { text-align: center; display: flex; flex-direction: column; justify-content: center; }
+.price-hero {
+  margin: 0 0 12px;
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: #f7f3ee;
+}
+.price-line {
+  margin: 0 0 16px;
+  font-size: 15px;
+  color: #c8c2b8;
+}
+.price-note {
+  margin: 0;
+  font-size: 12px;
+  color: #9a9286;
+  max-width: 22em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Stagger, same motion language as the included rows */
+html.feat-casestudy .case-bento .photo-grid,
+html.feat-casestudy .story-card {
+  opacity: 0;
+  transform: translateY(24px);
+}
+@keyframes caseEnter {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+html.feat-casestudy .case-bento.is-inview .photo-grid,
+html.feat-casestudy .case-bento.is-inview .story-card,
+html.shot-case .case-bento .photo-grid,
+html.shot-case .story-card {
+  animation: caseEnter 600ms ease-out forwards;
+  animation-delay: var(--ed-delay, 0ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  html.feat-casestudy .case-bento .photo-grid,
+  html.feat-casestudy .story-card,
+  html.shot-case .case-bento .photo-grid,
+  html.shot-case .story-card {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+html.shot-case body > *:not(#einblicke):not(dialog) { display: none !important; }
+html.shot-case, html.shot-case body { background: var(--cream); }
+html.shot-case #einblicke { padding-top: 64px; padding-bottom: 72px; }
+html.shot-case .case-bento .photo-grid,
+html.shot-case .story-card {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+@media (max-width: 799px) {
+  html.feat-casestudy .case-bento {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "mosaic"
+      "chef"
+      "couple"
+      "menu"
+      "price";
+  }
+  html.feat-casestudy .case-bento .photo-grid { grid-area: mosaic; margin: 0; }
+  .story-card { padding: 24px 20px 22px; }
+  .couple-quote p { font-size: 26px; }
+  .chef-person { grid-template-columns: auto 1fr; }
 }
