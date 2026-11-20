@@ -4,11 +4,13 @@
 <!--
   Planned live URL: https://hochzeit.chefmade.de/
   TODO (engineering / CTO): 301-redirect https://chefmade.de/wedding → https://hochzeit.chefmade.de/
-  This folder is a static mockup. Do not deploy it without a review.
+  Launch-ready static copy. Do not deploy from this folder without a review.
 
-  English is the default language of this mockup. The previous German copy
-  is kept in js/app.js (I18N.de) and in the comment below so a DE version
-  can be restored later. DE and DA in the language toggle are placeholders.
+  Placeholder blocks are hidden behind window.FEATURES (see the inline
+  head script and js/app.js). Flip a flag to true to reveal a block once
+  real copy exists. English is the default language. Previous German copy
+  is kept in js/app.js (I18N.de) and in the comment below. DE and DA in
+  the language toggle are placeholders (hidden via FEATURES.langtoggle).
 
   DE (previous):
   Title: Die Hochzeit, von der alle reden werden.
@@ -44,6 +46,18 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/inklusive-c.css">
   <script>
+    // Source of truth for optional blocks. js/app.js reads the same object.
+    // Set a flag to true to reveal the matching [data-feature] block(s)
+    // once real copy is ready. Defaults are off so placeholders never show.
+    window.FEATURES = {
+      reviews: false,
+      pricing: false,
+      casestudy: false,
+      faq: false,
+      addons: false,
+      email: false,
+      langtoggle: false
+    };
     (function () {
       try {
         var q = new URLSearchParams(location.search);
@@ -55,6 +69,10 @@
       } catch (e) {}
     })();
   </script>
+  <style>
+    /* Beat utility display rules so flagged blocks never flash. */
+    [data-feature][hidden] { display: none !important; }
+  </style>
 
 </head>
 <body class="variant-c">
@@ -63,9 +81,8 @@
       <a class="logo" href="https://chefmade.de" target="_blank" rel="noopener noreferrer" aria-label="Chefmade">
         <img src="assets/img/logo_white.svg" alt="chefmade">
       </a>
-      <span class="mockup-badge">Mockup</span>
     </div>
-    <nav class="lang-switch" aria-label="Language">
+    <nav class="lang-switch" data-feature="langtoggle" hidden aria-label="Language">
       <!-- TODO: DE and DA are placeholders only. Do not wire a real translation until copy is signed off. Previous German strings live in js/app.js (I18N.de) and in the HTML comment in <head>. -->
       <a href="#" data-lang="en" class="is-active" aria-current="true">EN</a>
       <span class="lang-sep" aria-hidden="true">|</span>
@@ -121,7 +138,7 @@
     </ul>
   </div>
 
-  <section class="reviews-strip" aria-label="Reviews from couples">
+  <section class="reviews-strip" data-feature="reviews" hidden aria-label="Reviews from couples">
     <div class="reviews-strip-inner">
       <div class="reviews-strip-head">
         <p class="reviews-kicker">What couples say</p>
@@ -278,7 +295,6 @@
           </div>
           <div class="ed-card-copy">
             <h3>Consultation call</h3>
-            <p class="ph">[Short description]</p>
             <a class="ed-more" href="#anfrage"><span class="ed-rule" aria-hidden="true"></span>Learn more</a>
           </div>
         </article>
@@ -288,7 +304,6 @@
           </div>
           <div class="ed-card-copy">
             <h3>Chef selection</h3>
-            <p class="ph">[Short description]</p>
             <a class="ed-more" href="#anfrage"><span class="ed-rule" aria-hidden="true"></span>Learn more</a>
           </div>
         </article>
@@ -298,7 +313,6 @@
           </div>
           <div class="ed-card-copy">
             <h3>Personalised menu</h3>
-            <p class="ph">[Short description]</p>
             <a class="ed-more" href="#anfrage"><span class="ed-rule" aria-hidden="true"></span>Learn more</a>
           </div>
         </article>
@@ -308,7 +322,6 @@
           </div>
           <div class="ed-card-copy">
             <h3>Tasting</h3>
-            <p class="ph">[Short description]</p>
             <a class="ed-more" href="#anfrage"><span class="ed-rule" aria-hidden="true"></span>Learn more</a>
           </div>
         </article>
@@ -318,7 +331,6 @@
           </div>
           <div class="ed-card-copy">
             <h3>Finest ingredients</h3>
-            <p class="ph">[Short description]</p>
             <a class="ed-more" href="#anfrage"><span class="ed-rule" aria-hidden="true"></span>Learn more</a>
           </div>
         </article>
@@ -332,14 +344,13 @@
           </div>
           <div class="ed-card-copy">
             <h3>Backup plan</h3>
-            <p class="ph">[Short description]</p>
             <a class="ed-more" href="#anfrage"><span class="ed-rule" aria-hidden="true"></span>Learn more</a>
           </div>
         </article>
       </div>
     </article>
 
-    <article class="ed-row" data-row="2">
+    <article class="ed-row" data-row="2" data-feature="addons" hidden>
       <header class="ed-head" style="--ed-delay: 0ms">
         <p class="ed-label">Optional</p>
         <h2>
@@ -397,7 +408,7 @@
       </div>
     </article>
 
-    <article class="ed-row" data-row="3">
+    <article class="ed-row" data-row="3" data-feature="addons" hidden>
       <header class="ed-head" style="--ed-delay: 0ms">
         <p class="ed-label">Optional</p>
         <h2>
@@ -461,7 +472,7 @@
     </article>
   </section>
 
-<section class="price-band" id="preis">
+<section class="price-band" id="preis" data-feature="pricing" hidden>
     <div class="kicker">Price &amp; party size</div>
     <div class="price-line"><span>from €<span class="ph">[X]</span> per person</span><span class="dot">·</span><span><span class="ph">[20–150]</span> guests</span></div>
     <p class="note">A transparent price — no nasty surprises.</p>
@@ -474,7 +485,7 @@
         <h2>A look at the result</h2>
       </div>
 
-      <article class="case">
+      <article class="case" data-feature="casestudy" hidden>
         <div class="case-img">
           <img src="assets/img/beyond-plate.webp" alt="A long wedding table set under flowers">
         </div>
@@ -504,7 +515,7 @@
         <div class="tile"><img src="assets/img/wedding-plan.webp" alt="A decorated wedding venue"></div>
       </div>
 
-      <aside class="review">
+      <aside class="review" data-feature="casestudy" hidden>
         <div class="mark" aria-hidden="true">„</div>
         <div>
           <div class="stars" aria-hidden="true"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
@@ -541,7 +552,7 @@
     </div>
   </section>
 
-  <section class="section faq" id="faq">
+  <section class="section faq" id="faq" data-feature="faq" hidden>
     <div class="section-inner">
       <h2>Frequently asked questions</h2>
       <div class="faq-list">
@@ -638,7 +649,7 @@
             <label for="wishes">Menu wishes or allergies (optional)</label>
             <textarea class="input" id="wishes" name="wishes" maxlength="500" placeholder=""></textarea>
           </div>
-          <div class="field" id="extras-field">
+          <div class="field" id="extras-field" data-feature="addons" hidden>
             <span class="sub-label">Optional extras (examples)</span>
             <div id="extras-list" class="chip-row extras-chips">
               <button type="button" class="chip extras-chip" data-extra="[Wine pairing]">[Wine pairing]</button>
@@ -764,7 +775,7 @@
         <span class="lab">WhatsApp</span>
         +49 15510 915140
       </a>
-      <div>
+      <div data-feature="email" hidden>
         <span class="lab">Email</span>
         <span class="ph">[email]</span>
       </div>
@@ -772,8 +783,8 @@
   </section>
 
   <dialog id="handoff-dialog">
-    <h3>Enquiry ready (mockup)</h3>
-    <p>On the live site, this enquiry would be handed off to <code>https://chefmade.de/dinings/create</code>. This mockup does not submit anything.</p>
+    <h3>Enquiry ready</h3>
+    <p>On the live site, this enquiry would be handed off to <code>https://chefmade.de/dinings/create</code>. This page does not submit the enquiry yet.</p>
     <div class="summary" id="handoff-summary"></div>
     <p class="fine" id="handoff-url" style="word-break:break-all"></p>
     <button type="button" class="btn btn-dark" id="handoff-close">Close</button>
@@ -789,7 +800,7 @@
           <h4>Contact</h4>
           <ul>
             <li><a href="tel:+4915510915140">+49 15510 915140</a></li>
-            <li><span class="ph">[email]</span></li>
+            <li data-feature="email" hidden><span class="ph">[email]</span></li>
             <li>
               <a class="footer-wa" href="https://wa.me/4915510915140" target="_blank" rel="noopener noreferrer">
                 <img src="assets/icons/whatsapp.svg" width="30" height="30" alt="">
@@ -826,7 +837,7 @@
         </a>
       </div>
       <div class="footer-legal">
-        <p>&copy; Chefmade ApS <span data-year>2026</span> · MOCKUP · not a live page</p>
+        <p>&copy; Chefmade ApS <span data-year>2026</span></p>
         <div class="footer-legal-links">
           <a href="https://chefmade.de/terms">Terms</a>
           <a href="https://chefmade.de/privacy">Privacy</a>
@@ -839,6 +850,18 @@
     document.querySelectorAll("[data-year]").forEach(function (el) {
       el.textContent = String(new Date().getFullYear());
     });
+  </script>
+  <script>
+    (function applyFeatures() {
+      var F = window.FEATURES || {};
+      document.querySelectorAll("[data-feature]").forEach(function (el) {
+        var key = (el.getAttribute("data-feature") || "").trim();
+        el.hidden = !F[key];
+      });
+      Object.keys(F).forEach(function (k) {
+        document.documentElement.classList.toggle("feat-" + k, !!F[k]);
+      });
+    })();
   </script>
   <script src="js/app.js"></script>
 

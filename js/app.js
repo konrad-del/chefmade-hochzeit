@@ -39,9 +39,24 @@
   var MIN_GUESTS = 20;
   var MAX_GUESTS = 150;
 
+  /* Optional blocks are gated by window.FEATURES (defined in the inline
+     head script so they can be hidden before first paint). Flip a flag
+     to true once real copy exists. This object is the same reference. */
+  var FEATURES = window.FEATURES || {
+    reviews: false,
+    pricing: false,
+    casestudy: false,
+    faq: false,
+    addons: false,
+    email: false,
+    langtoggle: false
+  };
+  window.FEATURES = FEATURES;
+
   /* Page is English-first. German strings are kept here so DE can be
      restored later. The language toggle is a placeholder only - do not
-     wire a real switch until the DE/DA copy is signed off. */
+     wire a real switch until the DE/DA copy is signed off. Hidden via
+     FEATURES.langtoggle until then. */
   var I18N = {
     en: {
       locale: "en-GB",
@@ -299,7 +314,7 @@
     var extrasRow = qs("#pv-extras-row");
     var extrasEl = qs("#pv-extras");
     if (extrasRow && extrasEl) {
-      if (state.extras.length) {
+      if (FEATURES.addons && state.extras.length) {
         extrasRow.hidden = false;
         extrasEl.textContent = state.extras.join(", ");
         extrasEl.classList.remove("is-empty");
@@ -478,7 +493,7 @@
         openFirst.classList.add("is-open");
       }
     }
-    if (params.get("extras") === "1") {
+    if (params.get("extras") === "1" && FEATURES.addons) {
       state.extras = ["[Service staff]", "[Wine pairing]"];
       syncExtrasUi();
     }
@@ -516,7 +531,7 @@
       var input = qs("input", card);
       if (input) input.checked = on;
     });
-    if (params.get("extras") === "1") {
+    if (params.get("extras") === "1" && FEATURES.addons) {
       state.extras = ["[Service staff]", "[Wine pairing]"];
     }
     if (params.get("inkl") === "1") {
@@ -573,7 +588,7 @@
     });
     var list = qs("#extras-list");
     var field = qs("#extras-field");
-    if (field) field.hidden = false;
+    if (field) field.hidden = !FEATURES.addons;
     if (list && !list.querySelector("[data-extra]")) {
       // Legacy path: only selected extras are listed, with a remove control.
       if (!state.extras.length) {
@@ -589,7 +604,7 @@
           });
         });
       }
-      if (field) field.hidden = !state.extras.length;
+      if (field) field.hidden = !FEATURES.addons || !state.extras.length;
     }
     qsa(".inkl-summary").forEach(function (bar) {
       var n = state.extras.length;

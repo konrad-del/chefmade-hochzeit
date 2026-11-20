@@ -2174,3 +2174,25 @@ html.shot-full .hero-c {
     margin: 4px 20px 28px;
   }
 }
+
+
+/* ===== Launch-ready feature flags & spacing ===== */
+[data-feature][hidden] { display: none !important; }
+
+/* After placeholder sections are hidden, keep backgrounds alternating:
+   black features → white problem/promise → dark “What’s included”
+   → cream photo insights → white how-it-works → cream form → black CTA. */
+#einblicke { background: var(--cream); }
+.section.process { background: var(--white); }
+
+/* Photo grid sits under the Insights heading when the case study is off. */
+#einblicke .case[hidden] + .photo-grid { margin-top: 0; }
+
+/* CTA contact: two columns while the email line is hidden. */
+@media (min-width: 700px) {
+  .cta-final .contact { grid-template-columns: 1fr 1fr; max-width: 520px; }
+  html.feat-email .cta-final .contact {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 760px;
+  }
+}
