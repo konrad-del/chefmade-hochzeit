@@ -84,6 +84,7 @@
           document.documentElement.classList.add("shot-case", "feat-casestudy");
           window.FEATURES.casestudy = true;
         }
+        if (shot === "problem") document.documentElement.classList.add("shot-problem", "shot-reviews");
       } catch (e) {}
     })();
   </script>
@@ -273,8 +274,7 @@
   <section class="section" id="story">
     <div class="section-inner story-grid">
       <div>
-        <div class="kicker">The problem</div>
-        <h2>The problem with wedding catering</h2>
+        <h2 class="visually-hidden">Common worries about wedding catering</h2>
         <ul class="qs">
           <li>Will it taste good for everyone?</li>
           <li>Will everything run smoothly?</li>

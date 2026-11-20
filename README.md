@@ -80,7 +80,7 @@ Submit does **not** navigate anywhere. It builds a URL to `https://chefmade.de/d
 
 ## What’s on the page
 
-Kept: Option C hero (full-bleed `wedding-plan.webp`, no plating frame, gold-rule photo caption), the reviews carousel directly under the hero, the three benefit tiles (moved to sit just before How it works — not merged into the problem/promise section, because that already covers a transparent price, menus and allergies, and putting the tiles there would have meant dropping or rewriting copy), the problem / promise section, the three-row “What’s included” strip (Always included, plus Guest favourites and Around the venue via `addonrows`), the case-study bento in `#einblicke` (“One wedding, start to finish”, via `casestudy`), how-it-works, the three-step form and handoff, the final CTA, phone / WhatsApp, and the footer.
+Kept: Option C hero (full-bleed `wedding-plan.webp`, no plating frame, gold-rule photo caption), the reviews carousel directly under the hero, the three benefit tiles (moved to sit just before How it works — not merged into the problem/promise section, because that already covers a transparent price, menus and allergies, and putting the tiles there would have meant dropping or rewriting copy), the problem / promise section (four questions on the left, no “The problem” heading; a visually hidden “Common worries about wedding catering” heading remains for accessibility), the three-row “What’s included” strip (Always included, plus Guest favourites and Around the venue via `addonrows`; cards and row spacing are compact), the case-study bento in `#einblicke` (“One wedding, start to finish”, via `casestudy`), how-it-works, the three-step form and handoff, the final CTA, phone / WhatsApp, and the footer.
 
 Hidden behind flags (see above): price band, FAQ, form extras (`addons`), contact email, language toggle. The case-study section is on for staging and hidden as a whole on the live hostname until real copy replaces the placeholders.
 
@@ -94,6 +94,10 @@ Renders from this folder:
 - `shots/casestudy-desktop.png` — case study only, 1440 wide (`?shot=case`)
 - `shots/casestudy-mobile.png` — case study only, 390 wide (`?shot=case`)
 - `shots/full-desktop.png` — full page, 1440 wide (`?shot=full`)
+- `shots/problem-desktop.png` — problem / promise section, 1440 wide, with ~100px of the reviews carousel above (`?shot=problem`)
+- `shots/problem-mobile.png` — problem / promise section, 390 wide (`?shot=problem`)
+- `shots/included-compact-desktop.png` — “What’s included” only, 1440 wide (`?shot=inkl`)
+- `shots/included-compact-mobile.png` — “What’s included” only, 390 wide (`?shot=inkl`)
 
 ## Package
 

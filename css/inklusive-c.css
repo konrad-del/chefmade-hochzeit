@@ -32,12 +32,12 @@ body.ed-page .ed-header .lang-sep { color: #3a3a3a; }
   --ed-gold: #c9a54a;
   --ed-muted: #b3aea6;
   --ed-card-w: 280px;
-  --ed-card-h: 560px;
+  --ed-card-h: 434px;
   --ed-gap: 16px;
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: 36px 0 112px;
+  padding: 36px 0 56px;
   background-color: #0b0b0b;
   background-image:
     radial-gradient(ellipse at 12% 0%, rgba(201, 165, 74, 0.07), transparent 46%),
@@ -47,7 +47,7 @@ body.ed-page .ed-header .lang-sep { color: #3a3a3a; }
 }
 
 .ed-kicker {
-  margin: 0 0 64px;
+  margin: 0 0 40px;
   padding: 0 56px;
   font-size: 12px;
   font-weight: 500;
@@ -61,7 +61,7 @@ body.ed-page .ed-header .lang-sep { color: #3a3a3a; }
   grid-template-columns: minmax(280px, 26vw) minmax(0, 1fr);
   align-items: center;
   column-gap: 36px;
-  margin-bottom: 96px;
+  margin-bottom: 52px;
   padding-left: 56px;
 }
 .ed-row:last-child { margin-bottom: 0; }
@@ -79,7 +79,7 @@ body.ed-page .ed-header .lang-sep { color: #3a3a3a; }
 .ed-head h2 {
   margin: 0;
   font-weight: 200;
-  font-size: clamp(2.15rem, 3.6vw, 3.55rem);
+  font-size: clamp(1.85rem, 2.95vw, 2.9rem);
   letter-spacing: 0.01em;
   line-height: 0.96;
   text-transform: uppercase;
@@ -267,9 +267,15 @@ html.shot-anim body:has(.ed-dabei) {
   background: #0b0b0b;
 }
 html.shot-inkl .ed-dabei,
-html.shot-anim .ed-dabei {
-  padding-top: 64px;
-  padding-bottom: 80px;
+html.shot-anim .ed-dabei,
+html.shot-inkl .ed-dabei.ed-dabei--page,
+html.shot-full .ed-dabei.ed-dabei--page {
+  padding-top: 40px;
+  padding-bottom: 56px;
+}
+.ed-dabei.ed-dabei--page {
+  padding-top: 40px;
+  padding-bottom: 56px;
 }
 html.shot-anim .ed-header { display: none !important; }
 html.shot-anim-row1 .ed-kicker,
@@ -289,21 +295,23 @@ html.shot-anim .ed-row .ed-card {
 
 /* Mobile: headline stacks above a swipeable 75vw row */
 @media (max-width: 799px) {
-  .ed-dabei {
+  .ed-dabei,
+  .ed-dabei.ed-dabei--page {
     --ed-card-w: 75vw;
-    --ed-card-h: 112vw;
+    --ed-card-h: 86vw; /* was 112vw; ~23% lower, width stays 75vw */
     --ed-gap: 12px;
-    padding: 16px 0 80px;
+    padding: 24px 0 48px;
   }
-  .ed-kicker { padding: 0 20px; margin-bottom: 36px; }
+  .ed-kicker { padding: 0 20px; margin-bottom: 28px; }
   .ed-row {
     grid-template-columns: 1fr;
     align-items: start;
-    row-gap: 28px;
-    margin-bottom: 64px;
+    row-gap: 22px;
+    margin-bottom: 40px;
     padding-left: 20px;
   }
   .ed-head { max-width: none; padding-right: 20px; }
+  /* Keep the mobile row titles at the previous size so they stay readable. */
   .ed-head h2 { font-size: clamp(2.15rem, 11vw, 3rem); }
   .ed-explore { margin-top: 16px; }
   .ed-card-copy { padding: 0 18px 20px; }
@@ -311,11 +319,17 @@ html.shot-anim .ed-row .ed-card {
   .ed-card h3.ph,
   .ed-card-copy h3.ph { font-size: 22px; }
   .ed-track { padding-right: 20px; }
+  html.shot-inkl .ed-dabei,
+  html.shot-inkl .ed-dabei.ed-dabei--page,
+  html.shot-full .ed-dabei.ed-dabei--page {
+    padding-top: 24px;
+    padding-bottom: 48px;
+  }
 }
 
 @media (min-width: 800px) and (max-width: 1100px) {
-  .ed-dabei { --ed-card-w: 240px; --ed-card-h: 520px; }
+  .ed-dabei { --ed-card-w: 240px; --ed-card-h: 404px; }
   .ed-row { padding-left: 40px; column-gap: 20px; }
   .ed-kicker { padding: 0 40px; }
-  .ed-head h2 { font-size: clamp(2.1rem, 4vw, 3.2rem); }
+  .ed-head h2 { font-size: clamp(1.8rem, 3.3vw, 2.65rem); }
 }
