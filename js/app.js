@@ -18,8 +18,9 @@
  * a refresh without the original query string. That storage is origin-bound
  * and does not carry over to chefmade.de; the query string is the handoff.
  *
- * This page never navigates to /dinings/create. Submit opens a dialog
- * with the constructed URL instead, so testing cannot accidentally post.
+ * Submit navigates to the constructed /dinings/create URL. Tracking
+ * params are captured into localStorage on landing so they survive
+ * in-site navigation before that handoff.
  */
 (function () {
   "use strict";
@@ -465,10 +466,7 @@
         "<dt>" + copy.handoffPhone + "</dt><dd>" + (state.phone || "—") + "</dd>";
     }
     if (urlEl) urlEl.textContent = url;
-    if (dialog && dialog.showModal) dialog.showModal();
-    if (typeof console !== "undefined") {
-      console.info("[MOCKUP] Handoff URL (not submitted):", url);
-    }
+    window.location.assign(url);
   }
 
   function bindFaq() {
@@ -780,7 +778,7 @@
         if (state.step < 3) {
           setStep(state.step + 1);
         } else {
-          // MOCKUP: do not navigate. Show the constructed handoff URL.
+          // Hand off to https://chefmade.de/dinings/create
           showHandoffDialog();
         }
       });
