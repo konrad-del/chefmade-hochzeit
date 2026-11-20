@@ -44,14 +44,15 @@
      head script so they can be hidden before first paint). Flip a flag
      to true once real copy exists. This object is the same reference. */
   var FEATURES = window.FEATURES || {
-    reviews: false,
+    reviews: true,
     pricing: false,
     casestudy: false,
     faq: false,
     addons: false,
     addonrows: true,
     email: false,
-    langtoggle: false
+    langtoggle: false,
+    stagingPlaceholders: true
   };
   window.FEATURES = FEATURES;
 
@@ -786,7 +787,8 @@
     }
     applyReduce();
     if (reduce.addEventListener) reduce.addEventListener("change", applyReduce);
-    if (new URLSearchParams(window.location.search).get("shot") === "reviews") {
+    var shot = new URLSearchParams(window.location.search).get("shot");
+    if (shot === "reviews" || shot === "top") {
       root.classList.add("is-paused");
       if (btn) {
         btn.setAttribute("aria-pressed", "true");

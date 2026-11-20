@@ -1928,12 +1928,20 @@ body.shot-form .checkout {
 .inkl-card p, .inkl-card-include p, .inkl-card .orbit-explain {
   display: block !important;
 }
-html.shot-inkl body > *:not(#dabei):not(dialog),
-html.shot-reviews body > *:not(.reviews-strip):not(dialog) {
+html.shot-inkl body > *:not(#dabei):not(dialog) {
   display: none !important;
 }
-html.shot-inkl body, html.shot-reviews body { background: #111; }
-html.shot-reviews body { background: var(--cream); }
+/* Isolated reviews shot. The strip now lives inside .hero-stack, so hide
+   siblings of the stack and of the strip. shot=top also adds shot-reviews
+   (to pause the marquee) but must show the hero, so it is excluded. */
+html.shot-reviews:not(.shot-top) body > *:not(.reviews-strip):not(.hero-stack):not(dialog) {
+  display: none !important;
+}
+html.shot-reviews:not(.shot-top) .hero-stack > *:not(.reviews-strip) {
+  display: none !important;
+}
+html.shot-inkl body, html.shot-reviews:not(.shot-top) body { background: #111; }
+html.shot-reviews:not(.shot-top) body { background: var(--cream); }
 html.shot-inkl .inkl-orbit { padding-top: 40px; padding-bottom: 40px; background: var(--cream); }
 html.shot-inkl body:has(.inkl-orbit) { background: var(--cream); }
 html.shot-inkl .inkl-board, html.shot-inkl .inkl-bento-wrap { padding-top: 48px; padding-bottom: 36px; }
@@ -2090,45 +2098,6 @@ html.shot-full .inkl-summary {
   background: #111;
   color: #fff;
 }
-.hero-c .hero-food-frame {
-  margin: 32px 0 0;
-  width: min(240px, 72vw);
-  background: #111;
-  padding: 7px;
-  border: 1px solid rgba(201, 165, 74, 0.65);
-  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.45);
-  z-index: 3;
-}
-.hero-c .hero-food-frame img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1;
-  object-fit: cover;
-  object-position: center center;
-  display: block;
-  max-width: none;
-  filter: none;
-}
-.hero-c .hero-food-frame figcaption {
-  margin: 8px 4px 2px;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #f0ece4;
-  font-weight: 500;
-}
-@media (min-width: 800px) {
-  .hero-c .hero-food-frame {
-    position: absolute;
-    right: max(40px, calc((100vw - 1280px) / 2 + 32px));
-    bottom: 88px;
-    width: min(300px, 26vw);
-    margin: 0;
-  }
-}
-@media (max-width: 799px) {
-  .hero-c .hero-copy { padding-bottom: 48px; }
-}
 
 /* Three-language toggle (EN live, DE/DA placeholders) */
 .lang-switch { flex-wrap: wrap; }
@@ -2160,20 +2129,6 @@ html.shot-full .hero-c {
   html.shot-full .hero-c { min-height: 844px; }
 }
 
-@media (max-width: 799px) {
-  .hero-c {
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: stretch;
-  }
-  .hero-c .hero-food-frame {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    width: min(220px, 68vw);
-    margin: 4px 20px 28px;
-  }
-}
 
 
 /* ===== Launch-ready feature flags & spacing ===== */
@@ -2460,4 +2415,74 @@ html.shot-case .story-card {
   .story-card { padding: 24px 20px 22px; }
   .couple-quote p { font-size: 26px; }
   .chef-person { grid-template-columns: auto 1fr; }
+}
+
+
+/* ===== Hero C + reviews: original Option C hero, reviews directly under ===== */
+.hero-stack { background: #111; }
+
+/* Recreate the original 1440×900 fold, where the cream reviews strip peeks
+   under the full-bleed hero (hero filled 814px of a 900px window). */
+@media (min-width: 800px) {
+  .hero-stack .hero-c { min-height: calc(100vh - 86px); }
+}
+
+/* Shots: lock the hero to the original 900px-fold height so the carousel
+   is fully visible in a 1440×~1300 frame, and the hero matches Option C. */
+html.shot-top .hero-stack .hero-c {
+  min-height: 814px;
+  height: 814px;
+  flex: none;
+}
+html.shot-full .hero-stack { min-height: 0; }
+html.shot-full .hero-stack .hero-c { min-height: 900px; height: auto; flex: none; }
+@media (max-width: 799px) {
+  html.shot-full .hero-stack .hero-c,
+  html.shot-top .hero-stack .hero-c { min-height: 844px; height: auto; }
+}
+
+/* Reviews sit directly under the hero, cream band as in hero-c.html */
+.hero-stack .reviews-strip {
+  background: var(--cream);
+  border-top: 0;
+  padding: 22px 0 26px;
+}
+.reviews-head-main {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  min-width: 0;
+}
+.reviews-trust {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #111;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+.reviews-trust:hover { opacity: 0.8; }
+.reviews-trust strong { font-weight: 700; }
+.review-card .ph,
+.review-card-meta.ph { color: #8c7029; }
+
+html.shot-top .reviews-track,
+html.shot-reviews .reviews-track {
+  animation: none;
+  transform: none;
+}
+
+/* Feature tiles now sit before How it works, as a dark recap band */
+.features-band {
+  background: #111;
+  color: #fff;
+}
+.features-band .features {
+  padding: 72px 24px 80px;
+  border-top: 0;
+}
+@media (max-width: 799px) {
+  .features-band .features { padding: 56px 24px 64px; }
 }

@@ -14,7 +14,8 @@ python3 -m http.server 8767 --bind 127.0.0.1
 # open http://127.0.0.1:8767/
 ```
 
-- Main page: `index.html` (English, hero C with the plating crop, Variant C “What’s included” with three stacked rows)
+- Main page: `index.html` (English, Option C full-bleed hero, reviews carousel directly under it, Variant C “What’s included” with three stacked rows)
+- Hero + reviews shot: `/?shot=top` (pauses the marquee; caps the hero to the original 1440×900 fold height)
 - Pre-filled form, jump to step 2: `/?demo=1`
 - Form-only shot: `/?demo=1&shot=form&step=2`
 - Full-page screenshot helper: `/?shot=full` (caps the hero height so a tall window does not stretch `100vh`)
@@ -29,16 +30,21 @@ The source of truth is `window.FEATURES` in the inline `<head>` script (mirrored
 
 ```js
 window.FEATURES = {
-  reviews: false,     // review marquee
+  reviews: true,      // review marquee directly under the hero
   pricing: false,     // price and guest-range band
   casestudy: false,   // “One wedding, start to finish” bento (chef, couple, menu, price). Off: Insights photo mosaic only.
   faq: false,         // whole FAQ (questions without answers looked odd)
   addons: false,      // form extras chips only (no prices, no selectable placeholders)
   addonrows: true,    // “Guest favourites” and “Around the venue” rows in What’s included (staging)
   email: false,       // [email] in the CTA and footer
-  langtoggle: false   // EN | DE | DA (DE and DA are still unwired placeholders)
+  langtoggle: false,  // EN | DE | DA (DE and DA are still unwired placeholders)
+  stagingPlaceholders: true  // allow bracketed placeholder copy on staging
 }
 ```
+
+`reviews` is on for **staging only**, with six clearly bracketed placeholder cards (`[Quote]`, `[Name]`, `[City · Month Year]`). `stagingPlaceholders` is also on. **Before a public launch, put real reviews in or set `reviews` to `false`.** The same applies to any other block that still uses bracketed copy (`addonrows`, and `casestudy` when that flag is turned on).
+
+A live-hostname guard in the head script sets `stagingPlaceholders` to `false` and adds `html.hide-placeholders` whenever `location.hostname === 'hochzeit.chefmade.de'`. Elements marked `data-placeholder` (the review cards, the Guest favourites / Around the venue rows, and the case-study story cards) are then hidden with CSS before first paint, even if the feature flags are left on by mistake.
 
 `addonrows` is on for **staging only**. Rows 2 and 3 still use bracketed titles because Konrad has not confirmed that list. **Replace those brackets with signed-off copy, or set `addonrows` back to `false`, before a real public launch.** The form’s extras chips stay on `addons: false` and are not a selector.
 
@@ -72,20 +78,17 @@ Submit does **not** navigate anywhere. It builds a URL to `https://chefmade.de/d
 
 ## What’s on the page
 
-Kept: hero C (venue photo + plated-course crop), benefit tiles, the problem / promise section, the three-row “What’s included” strip (Always included, plus Guest favourites and Around the venue via `addonrows`), the Insights photo mosaic (the case-study bento stays behind `casestudy`), how-it-works, the three-step form and handoff, the final CTA, phone / WhatsApp, and the footer.
+Kept: Option C hero (full-bleed `wedding-plan.webp`, no plating frame, gold-rule photo caption), the reviews carousel directly under the hero, the three benefit tiles (moved to sit just before How it works — not merged into the problem/promise section, because that already covers a transparent price, menus and allergies, and putting the tiles there would have meant dropping or rewriting copy), the problem / promise section, the three-row “What’s included” strip (Always included, plus Guest favourites and Around the venue via `addonrows`), the Insights photo mosaic (the case-study bento stays behind `casestudy`), how-it-works, the three-step form and handoff, the final CTA, phone / WhatsApp, and the footer.
 
-Hidden behind flags (see above): reviews, price band, the case-study story cards and “One wedding, start to finish” heading (`casestudy`), FAQ, form extras (`addons`), contact email, language toggle.
+Hidden behind flags (see above): price band, the case-study story cards and “One wedding, start to finish” heading (`casestudy`), FAQ, form extras (`addons`), contact email, language toggle.
 
 ## Shots
 
-Launch renders (from this folder):
+Renders from this folder:
 
-- `shots/launch-desktop.png` — full page, 1440 wide (`?shot=full`)
-- `shots/launch-mobile.png` — full page, 390 wide (@2x, `?shot=full`)
-- `shots/included-section-desktop.png` — “What’s included” only, 1440 wide (`?shot=inkl`, cards forced visible)
-- `shots/included-section-mobile.png` — “What’s included” only, 390 wide (@2x, `?shot=inkl`)
-- `shots/casestudy-desktop.png` — case study only, 1440 wide (`?shot=case`, flag forced on, cards visible)
-- `shots/casestudy-mobile.png` — case study only, 390 wide (@2x, `?shot=case`)
+- `shots/top-desktop.png` — hero plus the full reviews carousel, 1440×~1300 (`?shot=top`)
+- `shots/top-mobile.png` — hero plus the carousel, 390 wide (`?shot=top`)
+- `shots/hero-compare.png` — original Option C hero (`hero-c.html`) on the left, the new English hero on the right
 
 ## Package
 
