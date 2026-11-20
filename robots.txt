@@ -1,0 +1,3 @@
+# STAGING ONLY — remove this file (or replace with a normal Allow) at launch.
+User-agent: *
+Disallow: /
